@@ -53,21 +53,8 @@ TRAIN_END_DATE = '2021-10-01'
 TEST_START_DATE = '2021-10-01'
 TEST_END_DATE = '2023-03-01'
 
-df = YahooDownloader(start_date = TRAIN_START_DATE,
-                     end_date = TEST_END_DATE,
-                     ticker_list = DOW_30_TICKER).fetch_data()
 
-df.sort_values(['date','tic']).head()
-
-fe = FeatureEngineer(use_technical_indicator=True,
-                     tech_indicator_list = INDICATORS,
-                     use_turbulence=True,
-                     user_defined_feature = False)
-
-processed = fe.preprocess_data(df)
-processed = processed.copy()
-processed = processed.fillna(0)
-processed = processed.replace(np.inf,0)
+processed = pd.read_csv('./datasets/DJIA.csv',index_col=0)
 
 stock_dimension = len(processed.tic.unique())
 state_space = 1 + 2*stock_dimension + len(INDICATORS)*stock_dimension
