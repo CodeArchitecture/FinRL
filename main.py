@@ -68,10 +68,10 @@ def main(args):
     # TEST_START_DATE = '2021-01-01'
     # TEST_END_DATE = '2022-06-01'
 
-    TRAIN_START_DATE = '2010-01-01'
-    TRAIN_END_DATE = '2021-10-01'
-    TEST_START_DATE = '2021-10-01'
-    TEST_END_DATE = '2023-03-01'
+    TRAIN_START_DATE = '2009-01-01'
+    TRAIN_END_DATE = '2019-01-01'
+    TEST_START_DATE = '2019-01-02'
+    TEST_END_DATE = '2022-01-01'
 
 
     processed = pd.read_csv(args.data_dir,index_col=0)
