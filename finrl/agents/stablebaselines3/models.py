@@ -244,7 +244,7 @@ class DRLEnsembleAgent:
         state_space,
         action_space,
         tech_indicator_list,
-        print_verbosity,
+        print_verbosity
     ):
         self.df = df
         self.train_period = train_period
@@ -635,6 +635,7 @@ class DRLEnsembleAgent:
             #                                                    self.action_space,
             #                                                    self.tech_indicator_list,
             #                                                    print_verbosity=self.print_verbosity)])
+
             # Model Selection based on sharpe ratio
             if (sharpe_ppo >= sharpe_a2c) & (sharpe_ppo >= sharpe_ddpg):
                 model_use.append("PPO")
@@ -654,7 +655,8 @@ class DRLEnsembleAgent:
 
                 # model_ensemble = self.get_model("ddpg",self.train_full_env,policy="MlpPolicy",model_kwargs=DDPG_model_kwargs)
                 # model_ensemble = self.train_model(model_ensemble, "ensemble", tb_log_name="ensemble_{}".format(i), iter_num = i, total_timesteps=timesteps_dict['ddpg']) #50_000
-
+            # Not use model selection
+            # model_ensemble = model_ddpg
             ############## Training and Validation ends ##############
 
             ############## Trading starts ##############

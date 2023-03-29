@@ -91,7 +91,6 @@ def main(args):
         "action_space": stock_dimension, 
         "reward_scaling": 1e-4,
         "print_verbosity":5
-        
     }
 
     rebalance_window = 63 # rebalance_window is the number of days to retrain the model
