@@ -1,3 +1,4 @@
+swig
 wrds
 numpy
 pandas
