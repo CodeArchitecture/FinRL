@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 from argparse import ArgumentParser
 from typing import List
 
@@ -43,8 +44,10 @@ def build_parser():
 
 
 # "./" will be added in front of each directory
-def check_and_make_directories(directories: list[str]):
+def clean_and_make_directories(directories: list[str]):
     for directory in directories:
+        if os.path.exists("./" + directory):
+            shutil.rmtree(directory)
         if not os.path.exists("./" + directory):
             os.makedirs("./" + directory)
 
@@ -52,7 +55,7 @@ def check_and_make_directories(directories: list[str]):
 def main() -> int:
     parser = build_parser()
     options = parser.parse_args()
-    check_and_make_directories(
+    clean_and_make_directories(
         [DATA_SAVE_DIR, TRAINED_MODEL_DIR, TENSORBOARD_LOG_DIR, RESULTS_DIR]
     )
 
