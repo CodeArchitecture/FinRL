@@ -1181,7 +1181,7 @@ DAX_30_TICKER = [
     "VNA.DE",
     "EOAN.DE",
     "HEN3.DE",
-    "DAI.DE",
+    # "DAI.DE",
     "DB1.DE",
     "DPW.DE",
     "DWNI.DE",
