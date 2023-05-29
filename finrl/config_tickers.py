@@ -1487,12 +1487,13 @@ FX_TICKER = [
 CRYPTO_TICKERS = [
     'BTC-USD',
     'ETH-USD',
-    'XRP-USD',
-    'USDT-USD',
-    'BCH-USD',
-    'LTC-USD',
-    'BNB-USD',
-    'EOS-USD',
-    'XLM-USD',
-    'TRX-USD'
+    'XRP-USD'
 ]
+
+#     'USDT-USD',
+#     'BCH-USD',
+#     'LTC-USD',
+#     'BNB-USD',
+#     'EOS-USD',
+#     'XLM-USD',
+#     'TRX-USD'

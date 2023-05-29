@@ -358,6 +358,44 @@ class StockTradingEnv(gym.Env):
     def reset(self):
         # initiate state
         self.state = self._initiate_state()
+        
+        if self.initial:
+            self.asset_memory = [
+                self.initial_amount
+                + np.sum(
+                    np.array(self.num_stock_shares)
+                    * np.array(self.state[1 : 1 + self.stock_dim])
+                )
+            ]
+        else:
+            previous_total_asset = self.previous_state[0] + sum(
+                np.array(self.state[1 : (self.stock_dim + 1)])
+                * np.array(
+                    self.previous_state[(self.stock_dim + 1) : (self.stock_dim * 2 + 1)]
+                )
+            )
+            self.asset_memory = [previous_total_asset]
+
+        self.day = 0
+        self.data = self.df.loc[self.day, :]
+        self.turbulence = 0
+        self.cost = 0
+        self.trades = 0
+        self.terminal = False
+        # self.iteration=self.iteration
+        self.rewards_memory = []
+        self.actions_memory = []
+        self.date_memory = [self._get_date()]
+
+        self.episode += 1
+
+        return self.state
+
+
+    def reset_new(self, state):
+        # initiate state
+        self.state = self._initiate_state()
+        self.state = state
 
         if self.initial:
             self.asset_memory = [
@@ -548,4 +586,9 @@ class StockTradingEnv(gym.Env):
     def get_sb_env(self):
         e = DummyVecEnv([lambda: self])
         obs = e.reset()
+        return e, obs
+
+    def get_sb_env_new(self,state):
+        e = DummyVecEnv([lambda: self])
+        obs = e.reset_new(state)
         return e, obs
