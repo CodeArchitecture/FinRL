@@ -14,9 +14,9 @@ from finrl.config import INDICATORS
 TRAIN_START_DATE = '2020-01-01'
 TRAIN_END_DATE = '2022-12-29'
 TRADE_START_DATE = '2022-12-29'
-TRADE_END_DATE = '2022-12-31'
+TRADE_END_DATE = '2022-12-30'
 
-TIMESTEPS = 10000
+TIMESTEPS = 100
 
 PORTFOLIO = CRYPTO_TICKERS
 
@@ -81,10 +81,6 @@ def process(df, phase='test', state=None):
     env_train, _ = StockTradingEnv(df = train, **env_kwargs).get_sb_env()
 
     if_using_a2c = True
-    if_using_ddpg = True
-    if_using_ppo = True
-    if_using_td3 = True
-    if_using_sac = True
 
     if phase=='train':
         agent = DRLAgent(env = env_train)
@@ -99,7 +95,7 @@ def process(df, phase='test', state=None):
 
     e_trade_gym = StockTradingEnv(df = trade, **env_kwargs)
 
-    test_env, test_obs = e_trade_gym.get_sb_env_new(state)
+    test_env, test_obs = e_trade_gym.get_sb_env()
 
     # test_env.state = (
     #                     [self.initial_amount]
@@ -113,15 +109,22 @@ def process(df, phase='test', state=None):
     #                         [],
     #                     )
     #                 ) 
-
+    print(test_obs)
+    # test_obs=np.zeros(1,31)
+    test_obs[0]=state
+    print(test_obs)
+    # test_obs=[]
     action, _states = model.predict(test_obs, deterministic=True)
                 # test_obs, rewards, dones, info = test_env.step(action)
-    print(np.floor(action*env_kwargs['hmax']))
-    dict()
+    action = np.floor(action*env_kwargs['hmax'])[0]
+    return action
 
 if __name__ == '__main__':
     df = load_data()
     df.to_csv('df.csv')
-    pd.read_csv('df.csv')
+    df = pd.read_csv('df.csv')
     state=np.concatenate([[500000,12,45,15,10,10,10],np.ones(24)])
-    process(df,'train',state)
+    action = process(df,'train',state)
+    tic = df.tic.unique()
+    action_map = {key: value for key, value in zip(tic, action)}
+    print(action_map)

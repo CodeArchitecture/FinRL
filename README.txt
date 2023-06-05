@@ -1,4 +1,1 @@
-DJIA:
-a2c 10000
-ppo 10000
-ddpg 2000
+python version 3.10.9
